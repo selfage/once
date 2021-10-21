@@ -7,13 +7,13 @@ export class OnceCaller<T extends Arr, R> {
 
   public constructor(
     private func: (...args: T) => R,
-    private elseFunc?: (...args: T) => R
+    private altFunc?: (...args: T) => R
   ) {}
 
   private callFirstTime(...args: T): R {
     this.result = this.func(...args);
-    if (this.elseFunc) {
-      this.call = this.elseFunc;
+    if (this.altFunc) {
+      this.call = this.altFunc;
     } else {
       this.call = this.callNoop;
     }
@@ -29,7 +29,7 @@ export class OnceCaller<T extends Arr, R> {
   }
 }
 
-export class OnceCallerOrError<T extends Arr, R> {
+export class OnceOrErrorCaller<T extends Arr, R> {
   // this.fail can be passed directly because it doesn't use any class member.
   private onceCaller = new OnceCaller<T, R>(this.func, this.fail);
 
@@ -47,4 +47,3 @@ export class OnceCallerOrError<T extends Arr, R> {
     this.onceCaller.reset();
   }
 }
-

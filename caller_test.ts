@@ -1,4 +1,4 @@
-import { OnceCaller, OnceCallerOrError } from "./caller";
+import { OnceCaller, OnceOrErrorCaller } from "./caller";
 import { assertThat, assertThrow, eq, eqError } from "@selfage/test_matcher";
 import { NODE_TEST_RUNNER } from "@selfage/test_runner";
 
@@ -41,25 +41,25 @@ NODE_TEST_RUNNER.run({
       name: "CallTwiceToThrowAndReset",
       execute: () => {
         // Execute
-        let onceCallerOrError = new OnceCallerOrError(
+        let onceOrErrorCaller = new OnceOrErrorCaller(
           (x: boolean, y: string) => {
             return `${y}:${x}`;
           }
         );
-        let result = onceCallerOrError.call(true, "yes");
+        let result = onceOrErrorCaller.call(true, "yes");
 
         // Verify
         assertThat(result, eq("yes:true"), "result");
 
         // Execute
-        let error = assertThrow(() => onceCallerOrError.call(false, "no"));
+        let error = assertThrow(() => onceOrErrorCaller.call(false, "no"));
 
         // Verify
         assertThat(error, eqError(new Error("to be called")), "error");
 
         // Execute
-        onceCallerOrError.reset();
-        result = onceCallerOrError.call(false, "no");
+        onceOrErrorCaller.reset();
+        result = onceOrErrorCaller.call(false, "no");
 
         // Verify
         assertThat(result, eq("no:false"), "different result");

@@ -2,7 +2,7 @@ type Arr = readonly unknown[];
 
 export function toOnce<T extends Arr, R>(
   func: (...args: T) => R,
-  elseFunc?: (...args: T) => R
+  altFunc?: (...args: T) => R
 ): (...args: T) => R {
   let result: R;
   let callNoop = (): R => {
@@ -10,8 +10,8 @@ export function toOnce<T extends Arr, R>(
   };
   let call = (...args: T): R => {
     result = func(...args);
-    if (elseFunc) {
-      call = elseFunc;
+    if (altFunc) {
+      call = altFunc;
     } else {
       call = callNoop;
     }
@@ -30,4 +30,3 @@ export function toOnceOrError<T extends Arr, R>(
   };
   return toOnce(func, fail);
 }
-
