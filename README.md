@@ -1,8 +1,8 @@
-# @seflage/lazy_instance
+# @seflage/once
 
 ## Install
 
-`npm install @selfage/lazy_instance`
+`npm install @selfage/once`
 
 ## Overview
 
