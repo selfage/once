@@ -74,3 +74,20 @@ console.log(fooOnceOrBarCaller.call(12, "now")); // now:12
 console.log(fooOnceOrBarCaller.call(21, "past")); // bar
 fooOnceOrBarCaller.reset();
 ```
+
+## Lazy instance
+
+`LazyInstance` is simply a more readable version of `OnceCaller` when it's only used to instantiate a class without taking more arguments.
+
+```TypeScript
+import { LazyInstance } from '@selfage/once/lazy_instance';
+
+class Foo {
+  public constructor(private bar: number) {}
+}
+
+let lazyFoo = new LazyInstance(() => new Foo(10));
+let foo = lazyFoo.get(); // Instantiates Foo
+let foo2 = lazyFoo.get(); // Returns the same Foo
+console.log(foo === foo2);
+```
