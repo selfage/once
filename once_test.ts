@@ -1,8 +1,8 @@
 import { toOnce, toOnceOrError } from "./once";
 import { assertThat, assertThrow, eq, eqError } from "@selfage/test_matcher";
-import { NODE_TEST_RUNNER } from "@selfage/test_runner";
+import { TEST_RUNNER } from "@selfage/test_runner";
 
-NODE_TEST_RUNNER.run({
+TEST_RUNNER.run({
   name: "OnceTest",
   cases: [
     {
